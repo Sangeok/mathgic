@@ -6,5 +6,4 @@ export default function Home() {
       <Main />
     </div>
   );
-  // return <Main src="/Main.webp" growthRate={0.2} transitionDuration={0.3} />;
 }

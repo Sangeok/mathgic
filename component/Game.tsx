@@ -16,15 +16,9 @@ export default function Game() {
   }, []);
 
   return (
-    <div className="flex flex-col w-full h-screen justify-center items-center gap-4">
-      {/* 가장 상단의 카드 */}
-      <div
-        className={`transition-all duration-1000 ease-in-out relative ${
-          isInitialPosition
-            ? "transform-none"
-            : "transform translate-x-[calc(50vw-10rem)] -translate-y-[calc(50vh-12rem)] scale-50"
-        }`}
-      >
+    <div className="relative w-full h-screen">
+      {/* 우측 상단의 카드 */}
+      <div className="absolute top-0 right-0 translate-x-[-4rem] translate-y-[4rem] scale-50">
         {!isInitialPosition && (
           <>
             {/* 배경 효과 */}
@@ -40,17 +34,24 @@ export default function Game() {
           </>
         )}
 
-        {/* 카드 */}
         <div className="relative">
-          <TrumpCard />
+          <TrumpCard cardNumber={3} />
         </div>
       </div>
 
-      {Array.from({ length: 9 }).map((_, index) => (
-        <div key={index} className="flex w-10 h-10">
-          <TrumpCard />
+      {/* 중앙에 위치한 카드들 */}
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div
+          className="grid grid-cols-3 gap-16 opacity-0 transition-opacity duration-1000"
+          style={{ opacity: isInitialPosition ? 0 : 1 }}
+        >
+          {Array.from({ length: 9 }).map((_, index) => (
+            <div key={index}>
+              <TrumpCard size="md" cardNumber={index + 1} initFlipped={false} />
+            </div>
+          ))}
         </div>
-      ))}
+      </div>
     </div>
   );
 }

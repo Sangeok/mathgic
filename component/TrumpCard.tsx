@@ -2,8 +2,14 @@
 
 import React, { useState } from "react";
 
-const TrumpCard = () => {
-  const [isFlipped, setIsFlipped] = useState<boolean>(true);
+interface TrumpCardProps {
+  size?: "sm" | "md" | "lg";
+  cardNumber?: number;
+  initFlipped?: boolean;
+}
+
+const TrumpCard = ({ size = "lg", cardNumber, initFlipped = true }: TrumpCardProps) => {
+  const [isFlipped, setIsFlipped] = useState<boolean>(initFlipped);
   const [flipDirection, setFlipDirection] = useState<string>("right"); // 'left' 또는 'right'
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -20,19 +26,19 @@ const TrumpCard = () => {
     setIsFlipped(!isFlipped);
   };
 
+  const sizeClasses = {
+    sm: "w-20 h-28",
+    md: "w-32 h-44",
+    lg: "w-52 h-72",
+  };
+
   return (
-    <div
-      className="w-52 h-72"
-      style={{ perspective: "1000px" }}
-      onClick={handleClick}
-    >
+    <div className={`${sizeClasses[size]}`} style={{ perspective: "1000px" }} onClick={handleClick}>
       <div
         className="relative w-full h-full transition-all duration-1000"
         style={{
           transformStyle: "preserve-3d",
-          transform: isFlipped
-            ? `rotateY(${flipDirection === "left" ? "-180deg" : "180deg"})`
-            : "rotateY(0deg)",
+          transform: isFlipped ? `rotateY(${flipDirection === "left" ? "-180deg" : "180deg"})` : "rotateY(0deg)",
         }}
       >
         {/* 앞면 */}
@@ -41,9 +47,7 @@ const TrumpCard = () => {
           style={{ backfaceVisibility: "hidden" }}
         >
           {/* 카드 상단 숫자/문양 */}
-          <div className="absolute top-2 left-2 text-2xl font-bold text-red-600">
-            3♥
-          </div>
+          <div className="absolute top-2 left-2 text-2xl font-bold text-red-600">{cardNumber}♥</div>
 
           {/* 중앙 하트 패턴 */}
           <div className="absolute inset-0 flex items-center justify-center">
@@ -55,9 +59,7 @@ const TrumpCard = () => {
           </div>
 
           {/* 카드 하단 숫자/문양 (180도 회전) */}
-          <div className="absolute bottom-2 right-2 text-2xl font-bold text-red-600 rotate-180">
-            3♥
-          </div>
+          <div className="absolute bottom-2 right-2 text-2xl font-bold text-red-600 rotate-180">{cardNumber}♥</div>
         </div>
 
         {/* 뒷면 */}

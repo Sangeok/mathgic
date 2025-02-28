@@ -5,6 +5,7 @@ import TrumpCard from "./TrumpCard";
 import CardEffect from "./CardEffect";
 import CardFace from "./CardFace";
 import CardBack from "./CardBack";
+import TimeText from "./TimeText";
 import "../css/Game.css";
 
 const ANIMATION_DELAY = 1000;
@@ -96,6 +97,8 @@ export default function Game() {
 
   return (
     <div className="relative w-full h-screen">
+      <TimeText />
+
       {/* 우측 상단의 카드 */}
       <div
         className="fixed top-5 right-5 z-50"
